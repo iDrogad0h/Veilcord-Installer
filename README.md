@@ -2,7 +2,8 @@
 
 **privacy-first vibes for your client.**
 
-Veilcord is a privacy-focused Discord client mod by [iDrogad0h](https://github.com/iDrogad0h). It is a rebrand of [Equicord](https://github.com/Equicord/Equicord) — itself an enhanced fork of [Vencord](https://github.com/Vendicated/Vencord) bundling 300+ community plugins — tuned for a clean, quiet experience: no telemetry, trackers blocked out of the box, and crash reporting disabled by default.
+Veilcord is a privacy-focused Discord client mod by [sensurare
+](https://github.com/iDrogad0h). It is a rebrand of [Equicord](https://github.com/Equicord/Equicord) — itself an enhanced fork of [Vencord](https://github.com/Vendicated/Vencord) bundling 300+ community plugins — tuned for a clean, quiet experience: no telemetry, trackers blocked out of the box, and crash reporting disabled by default.
 
 ## Features
 
