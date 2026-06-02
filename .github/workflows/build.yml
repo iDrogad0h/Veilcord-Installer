@@ -1,0 +1,45 @@
+name: build
+
+# Builds the Windows .exe automatically.
+#  - On every push to main: produces downloadable build artifacts.
+#  - On a version tag (e.g. v1.0.0): also publishes a GitHub Release with the exe.
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Get GUI dependencies
+        run: go get github.com/lxn/walk github.com/lxn/win
+
+      - name: Build GUI (Veilcord.exe — the two-button window)
+        run: go build -tags gui -ldflags "-H windowsgui -s -w" -o Veilcord.exe .
+
+      - name: Build CLI (Veilcord-cli.exe — console fallback)
+        run: go build -ldflags "-s -w" -o Veilcord-cli.exe .
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Veilcord-windows
+          path: |
+            Veilcord.exe
+            Veilcord-cli.exe
+
+      - name: Publish Release (only on a version tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Veilcord.exe
+            Veilcord-cli.exe
