@@ -22,10 +22,16 @@ jobs:
       - name: Get GUI dependencies
         run: go get github.com/lxn/walk github.com/lxn/win
 
-      - name: Build GUI (Veilcord.exe — the two-button window)
+      - name: Embed Windows manifest (this is what lets the window open)
+        shell: pwsh
+        run: |
+          go install github.com/akavel/rsrc@latest
+          & "$(go env GOPATH)\bin\rsrc.exe" -manifest Veilcord.manifest -arch amd64 -o rsrc_windows_amd64.syso
+
+      - name: Build GUI (Veilcord.exe - the two-button window)
         run: go build -tags gui -ldflags "-H windowsgui -s -w" -o Veilcord.exe .
 
-      - name: Build CLI (Veilcord-cli.exe — console fallback)
+      - name: Build CLI (Veilcord-cli.exe - console fallback)
         run: go build -ldflags "-s -w" -o Veilcord-cli.exe .
 
       - name: Upload build artifacts
